@@ -141,7 +141,73 @@ def assign_numbers(praksisfile):
 			
 		stud_list.sort(key= lambda x: x.place[0], reverse = True)
 
+		group1 = []
+		group2 = []
+		group3 = []
+		group4 = []
+
 		for i,student in  enumerate(stud_list):
 			student.assign_place(2,i+1)
+			if(i < len(stud_list)/4):
+				group1.append(student)
+			elif(i < len(stud_list)/2):
+				group2.append(student)
+			elif(i < (3*len(stud_list))/4):
+				group3.append(student)
+			else:
+				group4.append(student)
+		
+		group1.sort(key= lambda x: x.place[1], reverse = True)
+		group2.sort(key= lambda x: x.place[1], reverse = True)
+		group3.sort(key= lambda x: x.place[1], reverse = True)
+		group4.sort(key= lambda x: x.place[1], reverse = True)
+		
+		lengths = [len(group1),len(group2),len(group3),len(group4)]
+
+		for i in range(len(stud_list)):
+			if(i < lengths[1]):
+				group2[i].assign_place(3,i+1)
+			elif(i < lengths[1]+lengths[2]):
+				group3[i%lengths[2]].assign_place(3,i+1)
+			elif(i < lengths[1]+lengths[2]+lengths[3]):
+				group4[i%lengths[3]].assign_place(3,i+1)
+			else:
+				group1[i%lengths[0]].assign_place(3,i+1)
+		
+		group1.sort(key= lambda x: x.place[2], reverse = True)
+		group2.sort(key= lambda x: x.place[2], reverse = True)
+		group3.sort(key= lambda x: x.place[2], reverse = True)
+		group4.sort(key= lambda x: x.place[2], reverse = True)
+		
+
+		for i in range(len(stud_list)):
+			if(i < lengths[2]):
+				group3[i].assign_place(4,i+1)
+			elif(i < lengths[2]+lengths[3]):
+				group4[i%lengths[3]].assign_place(4,i+1)
+			elif(i < lengths[0]+lengths[2]+lengths[3]):
+				group1[i%lengths[0]].assign_place(4,i+1)
+			else:
+				group2[i%lengths[1]].assign_place(4,i+1)
+		
+		group1.sort(key= lambda x: x.place[3], reverse = True)
+		group2.sort(key= lambda x: x.place[3], reverse = True)
+		group3.sort(key= lambda x: x.place[3], reverse = True)
+		group4.sort(key= lambda x: x.place[3], reverse = True)
+		
+		for i in range(len(stud_list)):
+			if(i < lengths[3]):
+				group4[i].assign_place(5,i+1)
+			elif(i < lengths[0]+lengths[3]):
+				group1[i%lengths[0]].assign_place(5,i+1)
+			elif(i < lengths[0]+lengths[1]+lengths[3]):
+				group2[i%lengths[1]].assign_place(5,i+1)
+			else:
+				group3[i%lengths[2]].assign_place(5,i+1)
+
+		for student in stud_list:
+			pl = student.place
 			
+			print pl, pl[1]+pl[2]+pl[3]+pl[4]
+
 assign_numbers("Praksisgroup1.json")
